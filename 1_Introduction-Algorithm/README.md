@@ -1,6 +1,6 @@
 # Introduction Algorithm
 
-## Poin poin pembelajaran
+### Poin poin pembelajaran
 
 1. Algoritma merupakan Prosedur Komputasi untuk melakukan atau membuat suatu hal dengan tahapan-tahapan yang sistematis, efektif dan efisien yang memiliki awalan dan akhiran (Memiliki Batasan)
 
