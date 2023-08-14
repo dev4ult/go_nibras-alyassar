@@ -1,5 +1,9 @@
 # Introduction Algorithm
 
-1. Poin 1
+Poin poin pembelajaran
 
-Jawaban Soal Latihan tertera pada <a href="https://docs.google.com/document/d/1g54Em44pLVkf6Uiv6ktLVRn31JpCByDrFhaU-21zeV4/edit?usp=sharing">Gdocs</a>
+1. Algoritma merupakan Prosedur Komputasi untuk melakukan atau membuat suatu hal dengan tahapan-tahapan yang sistematis, efektif dan efisien yang memiliki awalan dan akhiran (Memiliki Batasan)
+
+2. Algoritma dapat divisualisasikan dengan pseudocode dan flowchart
+
+3. Algoritma membantu dalam mendefinisikan sebuah penyelesaian masalah termasuk didalam pemrogragraman komputer
