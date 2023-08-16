@@ -15,7 +15,7 @@ func main() {
 	scanner := bufio.NewReader(os.Stdin)
 	fmt.Print("Masukan kata: ")
     word, _ = scanner.ReadString('\n')
-	word = strings.ReplaceAll(word, "\r\n", "")
+	word = strings.ReplaceAll(word, "\n", "")
 	fmt.Println("Captured:", word)
 	ValidPalindrome(word)
 }
