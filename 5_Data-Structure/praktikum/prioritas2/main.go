@@ -3,7 +3,33 @@ package main
 import "fmt"
 
 func PairSum(arr []int, target int) []int {
+	var indexArr []int
 
+	for index, val := range arr {
+		if val > target {
+			continue
+		}
+
+		for index2, val2 := range arr {
+			if index2 == index {
+				continue
+			}
+			
+			total := val + val2 
+
+			if total == target {
+				indexArr = append(indexArr, index)
+				indexArr = append(indexArr, index2)
+				break
+			}
+		} 
+
+		if len(indexArr) > 0 {
+			break
+		}
+	}
+
+	return indexArr
 }
 
 
