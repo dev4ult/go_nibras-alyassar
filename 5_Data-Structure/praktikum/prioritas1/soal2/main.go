@@ -3,7 +3,20 @@ package main
 import "fmt"
 
 func Mapping(slice []string) map[string]int {
+	var result = make(map[string]int)
 
+	for _, val := range slice {
+		_, exist := result[val]
+		
+		if exist {
+			result[val]++
+			continue
+		}
+		
+		result[val] = 1
+	}
+
+	return result
 }
 
 func main() {

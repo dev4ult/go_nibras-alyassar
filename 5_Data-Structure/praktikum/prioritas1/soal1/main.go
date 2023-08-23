@@ -3,7 +3,23 @@ package main
 import "fmt"
 
 func ArrayMerge(arrayA, arrayB []string) []string {
+	
+	for _, itemB := range arrayB {
+		continueLoop := false
+		for _, itemA := range arrayA {
+			if itemA == itemB {
+				continueLoop = true		
+			}
+		}
 
+		if continueLoop {
+			continue
+		}
+		
+		arrayA = append(arrayA, itemB)
+	}
+
+	return arrayA
 }
 
 func main() {
