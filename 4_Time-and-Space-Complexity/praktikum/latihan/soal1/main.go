@@ -1,35 +1,20 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"math"
+)
 
 func main() {
-	fmt.Println(primeNumber(17))
+	fmt.Println(primeNumber(1000000007))
 }
 
-
-// Time Complexity = O(n)
-func primeNumber(n int) bool {
-	var ctr int = 0
-	for i := 1; i <= n; i++ {
-		if n % i == 0 {
-			ctr++
+func primeNumber(number int) string {
+	for i := 2; i <= int(math.Sqrt(float64(number))); i++ {
+		if number % i == 0 {
+			return "Bilangan Prima"
 		}
 	}
 
-	return ctr == 2
-}
-
-// Time Complexity = O(n / 2)
-func primeNumber2(n int) bool {
-	for i := 2; i < n; i++ {
-		if n % i == 0 {
-			return false
-		}
-	}
-
-	return true
-}
-
-func primeNumber3(n int) bool {
-	
+	return "Bukan Bilangan Prima"
 }
