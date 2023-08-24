@@ -1,10 +1,23 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+)
 
 
 func playingDomino(cards [][]int, deck []int) interface{} {
 
+	for _, card := range cards {
+		if card[0] == deck[0] || card[0] == deck[1]  {
+			return card
+		}
+		
+		if card[1] == deck[0] || card[1] == deck[1] {
+			return card
+		}
+	}
+
+	return "Tutup kartu"
 
 }
 
