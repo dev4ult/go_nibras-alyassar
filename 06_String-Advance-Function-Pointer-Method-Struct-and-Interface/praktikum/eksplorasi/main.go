@@ -2,49 +2,31 @@ package main
 
 import "fmt"
 
-
 type student struct {
-
-name string
-
-nameEncode string
-
-score int
-
+	name string
+	nameEncode string
+	score int
 }
 
-
 type Chiper interface {
-
-Encode() string
-
-Decode() string
-
+	Encode() string
+	Decode() string
 }
 
 
 func (s *student) Encode() string {
 
-var nameEncode = ""
+	var nameEncode = ""
 
-
-// your code here
-
-
-return nameEncode
+	return nameEncode
 
 }
 
 
 func (s *student) Decode() string {
 
-var nameDecode = ""
-
-
-// your code here
-
-
-return nameDecode
+	var nameDecode = ""
+	return nameDecode
 
 }
 
