@@ -1,4 +1,4 @@
-# Recursive, Number Theory, Sorting, Searching
+# Recursive, Number Theory, Sorting and Searching
 
 ### Poin poin pembelajaran
 
