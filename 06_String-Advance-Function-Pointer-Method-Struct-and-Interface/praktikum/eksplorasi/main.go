@@ -14,20 +14,76 @@ type Chiper interface {
 }
 
 
-func (s *student) Encode() string {
+func GetSortedIndex(chr string) int {
+	if len(chr) > 1 {
+		return -1
+	}
 
+	lowercaseAlphabet := "abcdefghijklmnopqrstuvwxyz"
+	uppercaseAlphabet := "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+
+	// indexOutput := 0
+	for index, lwrChar := range lowercaseAlphabet {
+		if chr == string(lwrChar) || chr == string(uppercaseAlphabet[index]) {
+			return index
+		}
+	}
+
+	// if not found
+	return -1
+}
+
+func GetReversedIndex(chr string) int {
+	if len(chr) > 1 {
+		return -1
+	}
+
+	lowercaseAlphabet := "zyxwvutsrqponmlkjihgfedcba"
+	uppercaseAlphabet := "ZYXWVUTSRQPONMLKJIHGFEDCBA"
+
+	// indexOutput := 0
+	for index, lwrChar := range lowercaseAlphabet {
+		if chr == string(lwrChar) || chr == string(uppercaseAlphabet[index]) {
+			return index
+		}
+	}
+
+	// if not found
+	return -1
+}
+
+func (s *student) Encode() string {
+	reversedAlphabet := "zyxwvutsrqponmlkjihgfedcba"
+	
 	var nameEncode = ""
 
-	return nameEncode
+	for _, char := range s.name {
+		indexChar := GetSortedIndex(string(char))
 
+		if indexChar != -1 {
+			nameEncode += string(reversedAlphabet[indexChar])
+		}
+	}
+
+	return nameEncode
 }
 
 
 func (s *student) Decode() string {
+	sortedAlphabet := "abcdefghijklmnopqrstuvwxyz"
 
 	var nameDecode = ""
-	return nameDecode
 
+	for _, char := range s.name {
+		indexChar := GetReversedIndex(string(char))
+
+		if indexChar != -1 {
+			nameDecode += string(sortedAlphabet[indexChar])
+		}
+	}
+
+
+	return nameDecode
 }
 
 
