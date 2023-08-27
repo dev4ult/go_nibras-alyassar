@@ -11,12 +11,10 @@ import (
 
 func SelisihDiagonalAbs() float64 {
 	scanner := bufio.NewReader(os.Stdin)
-
+	
 	rowOne, _ := scanner.ReadString('\n') 
 	rowTwo, _ := scanner.ReadString('\n') 
 	rowThree, _ := scanner.ReadString('\n')
-	
-	
 	
 	var diagonalArr [][]string
 
