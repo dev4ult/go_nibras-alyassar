@@ -7,12 +7,9 @@ import (
 
 
 func MaximumBuyProduct(money int, productPrice []int) int {
-
 	sort.Slice(productPrice, func(i, j int) bool {
 		return productPrice[i] < productPrice[j]
 	})
-
-	// fmt.Println(productPrice)
 
 	totalPrice := 0
 	counter := 0

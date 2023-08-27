@@ -10,7 +10,6 @@ func fibonacci(number int) int {
 	}
 
 	return fibonacci(number - 2) + fibonacci(number - 1)
-
 }
 
 

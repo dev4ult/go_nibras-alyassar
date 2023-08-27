@@ -15,7 +15,6 @@ type pair struct {
 func MostAppearItem(items []string) []pair {
 	var list []pair
 
-
 	for _, itemName := range items {
 
 		isExist := false
@@ -43,7 +42,6 @@ func MostAppearItem(items []string) []pair {
 	})
 	
 	return list
-
 }
 
 
@@ -78,13 +76,6 @@ func main() {
 		fmt.Print(list.name, " -> ", list.count, " ")
 
 	}
-
-
-
-
-	
-
-	
 
 }
 
