@@ -5,17 +5,23 @@ import (
 	"strconv"
 )
 
-func loopBinary(n int) []string {
+func ConvDecToBinary(n int) string {
 
-	var binaryElements []string
+	var binaryElements string
 
-	for i := 0; i <= n; i++ {
-		binaryElements = append(binaryElements, strconv.FormatInt(int64(i), 2))
+	for i := n; i > 0; i /= 2 {
+		binaryElements += strconv.Itoa(i % 2)
 	}
 
-	return binaryElements
+	var reversedStr string = ""
+
+	for i := len(binaryElements) - 1; i >= 0; i-- {
+		reversedStr += string(binaryElements[i])
+	}
+
+	return reversedStr
 }
 
 func main() {
-	fmt.Println(loopBinary(4))
+	fmt.Println(ConvDecToBinary(12))
 }
