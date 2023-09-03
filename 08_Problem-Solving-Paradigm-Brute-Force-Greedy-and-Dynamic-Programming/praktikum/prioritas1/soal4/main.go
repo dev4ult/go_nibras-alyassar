@@ -1,5 +1,7 @@
 package main
 
+import "fmt"
+
 func EquationXYZ(a, b, c int) {
 	for x := 1; x <= 1000; x++ {
 		for y := 1; y <= 1000; y++ {
