@@ -1,4 +1,4 @@
-CREATE DATABASE online_alta_shop;
+CREATE DATABASE alta_online_shop;
 
 USE online_alta_shop;
 
