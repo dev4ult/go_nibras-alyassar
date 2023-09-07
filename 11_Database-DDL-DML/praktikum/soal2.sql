@@ -1,3 +1,7 @@
+CREATE DATABASE online_alta_shop;
+
+USE online_alta_shop;
+
 CREATE TABLE users (
   id INT AUTO_INCREMENT PRIMARY KEY,
   name VARCHAR(100) NOT NULL,
