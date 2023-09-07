@@ -8,12 +8,6 @@ CREATE TABLE users (
   updated_at TIMESTAMP DEFAULT current_timestamp()
 );
 
-CREATE TABLE products (
-  id INT AUTO_INCREMENT PRIMARY KEY,
-  operator_id INT,
-  type_id INT,
-  product VARCHAR(150) NOT NULL
-);
 
 CREATE TABLE product_types (
   id INT AUTO_INCREMENT PRIMARY KEY,
@@ -31,10 +25,20 @@ CREATE TABLE operators (
   updated_at TIMESTAMP DEFAULT current_timestamp()
 );
 
+CREATE TABLE products (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  operator_id INT,
+  type_id INT,
+  product VARCHAR(150) NOT NULL,
+  FOREIGN KEY(operator_id) REFERENCES operators(id),
+  FOREIGN KEY(type_id) REFERENCES product_types(id)
+);
+
 CREATE TABLE product_descriptions (
   id INT AUTO_INCREMENT PRIMARY KEY,
-  product_id INT UNIQE NOT NULL,
-  product_description TEXT
+  product_id INT UNIQUE NOT NULL,
+  product_description TEXT,
+  FOREIGN KEY(product_id) REFERENCES products(id)
 );
 
 CREATE TABLE payment_methods (
@@ -44,13 +48,16 @@ CREATE TABLE payment_methods (
 
 CREATE TABLE transactions (
   id INT AUTO_INCREMENT PRIMARY KEY,
-  user_id INT NOT NULL
+  user_id INT NOT NULL,
+  FOREIGN KEY(user_id) REFERENCES users(id)
 );
 
 CREATE TABLE transaction_details (
   id INT AUTO_INCREMENT PRIMARY KEY,
   transaction_id INT NOT NULL,
-  product_id INT NOT NULL
+  product_id INT NOT NULL,
+  FOREIGN KEY(transaction_id) REFERENCES transactions(id),
+  FOREIGN KEY(product_id) REFERENCES products(id)
 );
 
 CREATE TABLE kurir (
@@ -61,7 +68,7 @@ CREATE TABLE kurir (
 );
 
 ALTER TABLE kurir
-  ADD ongkos_dasar INT;
+  ADD ongkos_dasar INT DEFAULT 0;
   
 ALTER TABLE kurir
   RENAME TO shipping;
@@ -71,11 +78,14 @@ DROP TABLE shipping;
 CREATE TABLE payment_method_descriptions (
   id INT AUTO_INCREMENT PRIMARY KEY,
   payment_method_id INT UNIQUE NOT NULL,
-  payment_method_description VARCHAR(255)
+  payment_method_description VARCHAR(255),
+  FOREIGN KEY(payment_method_id) REFERENCES payment_methods(id)
 );
 
 CREATE TABLE user_payment_method_details (
   id INT AUTO_INCREMENT PRIMARY KEY,
   user_id INT NOT NULL,
-  payment_method_id NOT NULL
+  payment_method_id INT NOT NULL,
+  FOREIGN KEY(user_id) REFERENCES users(id),
+  FOREIGN KEY(payment_method_id) REFERENCES payment_methods(id)
 );
