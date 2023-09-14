@@ -1,0 +1,11 @@
+Connection to google:
+
+Pinging forcesafesearch.google.com [2001:4860:4802:32::78] with 32 bytes of data:
+Reply from 2001:4860:4802:32::78: time=21ms 
+Reply from 2001:4860:4802:32::78: time=19ms 
+Reply from 2001:4860:4802:32::78: time=20ms 
+
+Ping statistics for 2001:4860:4802:32::78:
+    Packets: Sent = 3, Received = 3, Lost = 0 (0% loss),
+Approximate round trip times in milli-seconds:
+    Minimum = 19ms, Maximum = 21ms, Average = 20ms
