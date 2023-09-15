@@ -3,7 +3,7 @@
 ### Jawaban
 
 1. Gambarkan desain ERD dari sistem pembelian tiket kereta api!
-   ![]()
+   ![](https://github.com/dev4ult/go_nibras-alyassar/blob/main/14_System-Design/screenshots/ERD.png)
 
 2. Gambarkan use case diagram dari sistem pembelian tiket kereta api!
    ![]()
