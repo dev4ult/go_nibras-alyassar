@@ -1,0 +1,120 @@
+{
+	"info": {
+		"_postman_id": "0190a3eb-adce-41be-bc9d-b122f2e31f0c",
+		"name": "Latihan HIT API - Alterra",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "28340333",
+		"_collection_link": "https://lively-equinox-899238.postman.co/workspace/My-Workspace~9e0e1605-ea53-4571-8f0e-0d4dce6965a4/collection/28340333-0190a3eb-adce-41be-bc9d-b122f2e31f0c?action=share&source=collection_link&creator=28340333"
+	},
+	"item": [
+		{
+			"name": "Skenario 1",
+			"item": [
+				{
+					"name": "posts",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "https://jsonplaceholder.typicode.com/posts"
+					},
+					"response": []
+				},
+				{
+					"name": "posts/3",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "https://jsonplaceholder.typicode.com/posts/3"
+					},
+					"response": []
+				},
+				{
+					"name": "posts",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"userId\": 4,\r\n    \"title\": \"Si Malin Kundang\",\r\n    \"body\": \"Lorem ipsum\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "https://jsonplaceholder.typicode.com/posts"
+					},
+					"response": []
+				},
+				{
+					"name": "posts/4",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": "https://jsonplaceholder.typicode.com/posts/4"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Skenario 2",
+			"item": [
+				{
+					"name": "user",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "https://virtserver.swaggerhub.com/sepulsa/RentABook-API/1.0.0/user"
+					},
+					"response": []
+				},
+				{
+					"name": "user",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": \"2\",\r\n    \"name\": \"Rindi Srin\",\r\n    \"age\": 18,\r\n    \"sex\": \"female\",\r\n    \"client_id\": 2\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "https://virtserver.swaggerhub.com/sepulsa/RentABook-API/1.0.0/user"
+					},
+					"response": []
+				},
+				{
+					"name": "book/2143",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"id\": 2143,\r\n  \"title\": \"Judul Buku Dua\",\r\n  \"isbn\": \"1-234-5678-9101112-13\",\r\n  \"writer\": \"Dr. Siapa\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "https://virtserver.swaggerhub.com/sepulsa/RentABook-API/1.0.0/book/2143"
+					},
+					"response": []
+				},
+				{
+					"name": "book/2143",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": "https://virtserver.swaggerhub.com/sepulsa/RentABook-API/1.0.0/book/2143"
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
