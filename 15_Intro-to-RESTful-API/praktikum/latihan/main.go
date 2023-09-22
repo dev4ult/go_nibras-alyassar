@@ -28,6 +28,7 @@ func articles(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 
+
 		w.Write(result)
 		return
 	}
@@ -38,10 +39,14 @@ func articles(w http.ResponseWriter, r *http.Request) {
 func main() {
 	http.HandleFunc("/articles", articles)
 
+
+
 	// setup server
 	var address = "localhost:8000"
 
 	fmt.Printf("server started at %s\n", address)
+	FetchAll()
+
 
 	err := http.ListenAndServe(address, nil)
 	if err != nil {
