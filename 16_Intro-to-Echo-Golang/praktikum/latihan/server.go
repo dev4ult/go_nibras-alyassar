@@ -18,11 +18,18 @@ type Product struct {
 	Stock 	int
 }
 
+type User struct {
+	Username 	string	`json:"username" form:"username"`
+	Email 		string	`json:"email" form:"email"`
+	password 	string	`json:"password" form:"password"`
+}
+
 func main() {
 	e := echo.New()
 
 	e.GET("/", homepage)
 	e.GET("/dashboard", dashboard)
+	e.POST("/register", register)
 	e.GET("/product/:id", product)
 	e.Logger.Fatal(e.Start(":8000"))
 }
@@ -35,6 +42,16 @@ func dashboard(e echo.Context) error {
 	response := Response{ Status: 200, Message: "This is dashboard page"}
 
 	return e.JSON(http.StatusOK, response)
+}
+
+func register(e echo.Context) error {
+	user := User{}
+
+	e.Bind(&user)
+	
+	return e.JSON(http.StatusOK, map[string]interface{}{
+		"user": user,
+	})
 }
 
 func product(e echo.Context) error {
