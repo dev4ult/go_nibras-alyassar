@@ -45,7 +45,6 @@ func GetUserByID(qParam string) (User, error, int) {
 
 
 	for indexRow, userRow := range users {
-		fmt.Println(userRow.Id, userId)
 		if userRow.Id == userId {
 			user = userRow
 			index = indexRow
