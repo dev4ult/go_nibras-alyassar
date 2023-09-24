@@ -34,7 +34,6 @@ func FindUser(paramId string) map[string]interface{} {
 	}
 }
 
-
 func GetUsers(ctx echo.Context) error {
 	var users []model.User
 

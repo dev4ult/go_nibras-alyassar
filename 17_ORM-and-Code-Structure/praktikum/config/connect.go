@@ -18,9 +18,9 @@ func InitDB() {
 		panic(err.Error())
 	}
 
-	// initMigrate()
+	initMigrate()
 }
 
 func initMigrate() {
-	DB.AutoMigrate(&model.Book{})
+	DB.AutoMigrate(&model.User{}, model.Book{}, &model.Blog{})
 }
