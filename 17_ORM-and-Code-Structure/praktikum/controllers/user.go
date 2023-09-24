@@ -8,14 +8,9 @@ import (
 
 	config "praktikum/config"
 	model "praktikum/models"
+	util "praktikum/utils"
 )
 
-func Response(status int, message string) map[string]interface{} {
-	return map[string]interface{} {
-		"status": status,
-		"message": message,
-	}
-}
 
 func FindUser(paramId string) map[string]interface{} {
 	var user model.User
@@ -23,13 +18,13 @@ func FindUser(paramId string) map[string]interface{} {
 	userId, err := strconv.Atoi(paramId)
 
 	if err != nil {
-		return Response(400, "Bad Request!")
+		return util.Response(400, "Bad Request!")
 	}
 
 	result := config.DB.First(&user, userId)
 
 	if result.RowsAffected < 1 {
-		return Response(404, "Not Found!")
+		return util.Response(404, "Not Found!")
 	}
 
 	return map[string]interface{} {
@@ -46,9 +41,7 @@ func GetUsers(ctx echo.Context) error {
 	err := config.DB.Find(&users).Error
 
 	if err != nil {
-		return ctx.JSON(http.StatusInternalServerError, map[string]interface{}{
-			"message": err.Error(),
-		})
+		return ctx.JSON(http.StatusInternalServerError, util.Response(500, err.Error()))
 	}
 
 	return ctx.JSON(http.StatusOK, map[string]interface{}{
@@ -65,9 +58,7 @@ func CreateUser(ctx echo.Context) error {
 	result := config.DB.Create(&user)
 
 	if result.Error != nil || result.RowsAffected < 1 {
-		return ctx.JSON(http.StatusInternalServerError, map[string]interface{} {
-			"message": result.Error,
-		})
+		return ctx.JSON(http.StatusInternalServerError, util.Response(500, result.Error.Error()))
 	}
 
 	return ctx.JSON(http.StatusOK, map[string]interface{} {
@@ -85,7 +76,7 @@ func GetUser(ctx echo.Context) error {
 
 	return ctx.JSON(http.StatusOK, map[string]interface{} {
 		"message": "User Found!",
-		"user": user,
+		"user": user["user"],
 	})
 }
 
@@ -104,10 +95,10 @@ func UpdateUser(ctx echo.Context) error {
 	result := config.DB.Table("users").Where("id", user["id"]).Updates(newUserData)
 
 	if result.RowsAffected < 1 {
-		return ctx.JSON(http.StatusInternalServerError, Response(500, "Something Went Wrong!"))
+		return ctx.JSON(http.StatusInternalServerError, util.Response(500, "Something Went Wrong!"))
 	}
 
-	return ctx.JSON(http.StatusOK, Response(200, "User Updated!"))
+	return ctx.JSON(http.StatusOK, util.Response(200, "User Updated!"))
 }
 
 func DeleteUser(ctx echo.Context) error {
@@ -121,8 +112,8 @@ func DeleteUser(ctx echo.Context) error {
 	result := config.DB.Delete(&model.User{}, user["id"])
 
 	if result.RowsAffected < 1 {
-		return ctx.JSON(http.StatusInternalServerError, Response(500, "Something Went Wrong!"))
+		return ctx.JSON(http.StatusInternalServerError, util.Response(500, "Something Went Wrong!"))
 	}
 
-	return ctx.JSON(http.StatusOK, Response(200, "User Deleted!"))
+	return ctx.JSON(http.StatusOK, util.Response(200, "User Deleted!"))
 }

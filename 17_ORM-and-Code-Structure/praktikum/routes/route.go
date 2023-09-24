@@ -9,12 +9,26 @@ import (
 func New() *echo.Echo {
 	e := echo.New()
 
-	e.GET("/users", controller.GetUsers)
-	e.POST("/users", controller.CreateUser)
 
-	e.GET("/users/:id", controller.GetUser)
-	e.PUT("/users/:id", controller.UpdateUser)
-	e.DELETE("/users/:id", controller.DeleteUser)
+	// Users Route Group
+	users := e.Group("/users")
+	users.GET("", controller.GetUsers)
+	users.POST("", controller.CreateUser)
+
+	users.GET("/:id", controller.GetUser)
+	users.PUT("/:id", controller.UpdateUser)
+	users.DELETE("/:id", controller.DeleteUser)
+
+	// Books Route Group
+	books := e.Group("/books")
+	books.GET("", controller.GetBooks)
+	books.POST("", controller.CreateBook)
+
+	books.GET("/:id", controller.GetBook)
+	books.PUT("/:id", controller.UpdateBook)
+	books.DELETE("/:id", controller.DeleteBook)
+
+	
 
 	return e
 }
