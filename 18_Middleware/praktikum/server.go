@@ -1,11 +1,12 @@
 package main
 
 import (
+	config "praktikum/config"
 	route "praktikum/routes"
 )
 
 func main() {
-    // config.ConnectDB()
+    config.ConnectDB()
 
     e := route.New()
 
