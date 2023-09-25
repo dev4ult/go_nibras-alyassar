@@ -1,13 +1,13 @@
 package middlewares
 
 import (
+	"os"
 	"time"
 
 	"github.com/golang-jwt/jwt"
 	"github.com/labstack/echo/v4"
 
 	config "praktikum/config"
-	constant "praktikum/constants"
 	model "praktikum/models"
 )
 
@@ -31,5 +31,5 @@ func CreateToken(userId int, username string) (string, error) {
 
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
 
-	return token.SignedString([]byte(constant.SECRET_JWT))
+	return token.SignedString([]byte(os.Getenv("SECRET_JWT")))
 }
