@@ -1,10 +1,8 @@
 package routes
 
 import (
-	"net/http"
-
+	jwt "github.com/labstack/echo-jwt"
 	"github.com/labstack/echo/v4"
-	mid "github.com/labstack/echo/v4/middleware"
 
 	constant "praktikum/constants"
 	controller "praktikum/controllers"
@@ -15,16 +13,22 @@ func New() *echo.Echo {
 	e := echo.New()
 
 	m.Logger(e)
-    e.GET("/", func(c echo.Context) error {
-        return c.String(http.StatusOK, "Hello, World!")
-    })
-	e.POST("/login", controller.Login)
+	e.POST("/users", controller.CreateUser)
+	e.POST("/users/login", controller.Login)
 
-	usersRoute := e.Group("/users")
-	// usersRoute.Use(mid.BasicAuth(m.ImplementAuth))
-	usersRoute.Use(mid.JWT([]byte(constant.SECRET_JWT)))
-	usersRoute.GET("", controller.GetUsers)
-	usersRoute.POST("", controller.CreateUser)
+	users := e.Group("/users")
+	users.Use(jwt.JWT([]byte(constant.SECRET_JWT)))
+	users.GET("", controller.GetUsers)
+	users.GET("/:id", controller.GetUser)
+	users.PUT("/:id", controller.UpdateUser)
+	users.DELETE("/:id", controller.DeleteUser)
+
+	books := e.Group("/books")
+	books.Use(jwt.JWT([]byte(constant.SECRET_JWT)))
+	books.POST("", controller.CreateBook)
+	books.GET("/:id", controller.GetBook)
+	books.PUT("/:id", controller.UpdateBook)
+	books.DELETE("/:id", controller.DeleteBook)
 
 	return e
 }

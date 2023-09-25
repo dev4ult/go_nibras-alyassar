@@ -22,10 +22,6 @@ func ImplementAuth(username string, password string, e echo.Context) (bool, erro
 	return true, nil
 }
 
-// func ImplementAuthJWT() {
-	
-// }
-
 func CreateToken(userId int, username string) (string, error) {
 	claims := jwt.MapClaims{}
 

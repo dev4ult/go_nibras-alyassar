@@ -23,6 +23,6 @@ import (
   }
 
   func initialMigration() {
-	DB.AutoMigrate(&model.User{})
+	DB.AutoMigrate(&model.Book{})
   }
 
