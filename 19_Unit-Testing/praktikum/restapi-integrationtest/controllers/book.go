@@ -8,12 +8,8 @@ import (
 
 	config "praktikum/config"
 	model "praktikum/models"
-	helper "praktikum/helpers"
+	util "praktikum/utils"
 )
-
-type BookController struct {
-	model model.Book
-}
 
 func FindBook(paramId string) map[string]interface{} {
 	var book model.Book
@@ -21,38 +17,35 @@ func FindBook(paramId string) map[string]interface{} {
 	bookId, err := strconv.Atoi(paramId)
 
 	if err != nil {
-		return helper.Response(400, "Bad Request!")
+		return util.Response(400, "Bad Request!")
 	}
 
 	result := config.DB.First(&book, bookId)
 
 	if result.RowsAffected < 1 {
-		return helper.Response(404, "Not Found!")
+		return util.Response(404, "Not Found!")
 	}
 
-	return map[string]interface{}{
+	return map[string]interface{} {
 		"status": 200,
 		"book":   book,
 		"id":     bookId,
 	}
 }
 
-func (b *BookController) GetBooks() echo.HandlerFunc {
-	return func(ctx echo.Context) error {
-		var books []model.Book
-	
-		err := config.DB.Find(&books).Error
-	
-		if err != nil {
-			return ctx.JSON(http.StatusInternalServerError, helper.Response(500, err.Error()))
-		}
-	
-		return ctx.JSON(http.StatusOK, map[string]interface{} {
-			"status": 200,
-			"message": "Books Listed!",
-			"books": books,
-		})
+func GetBooks(ctx echo.Context) error {
+	var books []model.Book
+
+	err := config.DB.Find(&books).Error
+
+	if err != nil {
+		return ctx.JSON(http.StatusInternalServerError, util.Response(500, err.Error()))
 	}
+
+	return ctx.JSON(http.StatusOK, map[string]interface{} {
+		"message": "Books Listed!",
+		"books": books,
+	})
 }
 
 func CreateBook(ctx echo.Context) error {
@@ -60,10 +53,10 @@ func CreateBook(ctx echo.Context) error {
 
 	ctx.Bind(&book)
 
-	result := config.DB.Create(&book)
+	err := config.DB.Create(&book).Error
 
-	if result.Error != nil || result.RowsAffected < 1 {
-		ctx.JSON(http.StatusInternalServerError, helper.Response(500, result.Error.Error()))
+	if err != nil {
+		ctx.JSON(http.StatusInternalServerError, util.Response(500, err.Error()))
 	}
 
 	return ctx.JSON(http.StatusOK, map[string]interface{} {
@@ -98,13 +91,13 @@ func UpdateBook(ctx echo.Context) error {
 
 	ctx.Bind(&newBookData)
 
-	result := config.DB.Table("books").Where("id", book["id"]).Updates(newBookData)
+	err := config.DB.Table("books").Where("id", book["id"]).Updates(newBookData).Error
 
-	if result.RowsAffected < 1 {
-		return ctx.JSON(http.StatusInternalServerError, helper.Response(500, "Something Went Wrong!"))
+	if err != nil {
+		return ctx.JSON(http.StatusInternalServerError, util.Response(500, "Something Went Wrong!"))
 	}
 
-	return ctx.JSON(http.StatusOK, helper.Response(200, "Book Updated!"))
+	return ctx.JSON(http.StatusOK, util.Response(200, "Book Updated!"))
 }
 
 func DeleteBook(ctx echo.Context) error {
@@ -114,11 +107,11 @@ func DeleteBook(ctx echo.Context) error {
 		return ctx.JSON(book["status"].(int), book)
 	}
 
-	result := config.DB.Delete(&model.Book{}, book["id"])
+	err := config.DB.Delete(&model.Book{}, book["id"]).Error
 
-	if result.RowsAffected < 1 {
-		return ctx.JSON(http.StatusInternalServerError, helper.Response(500, "Something Went Wrong!"))
+	if err != nil {
+		return ctx.JSON(http.StatusInternalServerError, util.Response(500, "Something Went Wrong!"))
 	}
 
-	return ctx.JSON(http.StatusOK, helper.Response(200, "book Deleted!"))
+	return ctx.JSON(http.StatusOK, util.Response(200, "book Deleted!"))
 }

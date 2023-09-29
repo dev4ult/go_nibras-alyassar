@@ -8,7 +8,7 @@ import (
 
 	config "praktikum/config"
 	model "praktikum/models"
-	util "praktikum/utils"
+	helper "praktikum/helpers"
 )
 
 func FindBlog(paramId string) map[string]interface{} {
@@ -17,13 +17,13 @@ func FindBlog(paramId string) map[string]interface{} {
 	blogId, err := strconv.Atoi(paramId)
 
 	if err != nil {
-		return util.Response(400, "Bad Request!")
+		return helper.Response(400, "Bad Request!")
 	}
 
 	result := config.DB.First(&blog, blogId)
 
 	if result.RowsAffected < 1 {
-		return util.Response(404, "Not Found!")
+		return helper.Response(404, "Not Found!")
 	}
 
 	return map[string]interface{}{
@@ -39,7 +39,7 @@ func GetBlogs(ctx echo.Context) error {
 	err := config.DB.Find(&blogs).Error
 
 	if err != nil {
-		return ctx.JSON(http.StatusInternalServerError, util.Response(500, err.Error()))
+		return ctx.JSON(http.StatusInternalServerError, helper.Response(500, err.Error()))
 	}
 
 	return ctx.JSON(http.StatusOK, map[string]interface{} {
@@ -57,7 +57,7 @@ func CreateBlog(ctx echo.Context) error {
 	result := config.DB.Create(&blog)
 
 	if result.Error != nil || result.RowsAffected < 1 {
-		ctx.JSON(http.StatusInternalServerError, util.Response(500, result.Error.Error()))
+		ctx.JSON(http.StatusInternalServerError, helper.Response(500, result.Error.Error()))
 	}
 
 	return ctx.JSON(http.StatusOK, map[string]interface{} {
@@ -95,10 +95,10 @@ func UpdateBlog(ctx echo.Context) error {
 	result := config.DB.Table("blogs").Where("id", blog["id"]).Updates(newblogData)
 
 	if result.RowsAffected < 1 {
-		return ctx.JSON(http.StatusInternalServerError, util.Response(500, "Something Went Wrong!"))
+		return ctx.JSON(http.StatusInternalServerError, helper.Response(500, "Something Went Wrong!"))
 	}
 
-	return ctx.JSON(http.StatusOK, util.Response(200, "blog Updated!"))
+	return ctx.JSON(http.StatusOK, helper.Response(200, "blog Updated!"))
 }
 
 func DeleteBlog(ctx echo.Context) error {
@@ -111,8 +111,8 @@ func DeleteBlog(ctx echo.Context) error {
 	result := config.DB.Delete(&model.Blog{}, blog["id"])
 
 	if result.RowsAffected < 1 {
-		return ctx.JSON(http.StatusInternalServerError, util.Response(500, "Something Went Wrong!"))
+		return ctx.JSON(http.StatusInternalServerError, helper.Response(500, "Something Went Wrong!"))
 	}
 
-	return ctx.JSON(http.StatusOK, util.Response(200, "blog Deleted!"))
+	return ctx.JSON(http.StatusOK, helper.Response(200, "blog Deleted!"))
 }
