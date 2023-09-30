@@ -34,7 +34,7 @@ func (uc *UserController) GetUsers() echo.HandlerFunc {
 	}
 }
 
-func (uc *UserController)  CreateUser(ctx echo.Context) echo.HandlerFunc {
+func (uc *UserController) CreateUser() echo.HandlerFunc {
 	return func(ctx echo.Context) error {
 		var user model.User
 	
@@ -91,7 +91,7 @@ func (uc *UserController) EditUser() echo.HandlerFunc {
 	}
 }
 
-func (uc *UserController) RemoveUser(ctx echo.Context) echo.HandlerFunc {
+func (uc *UserController) RemoveUser() echo.HandlerFunc {
 	return func(ctx echo.Context) error {
 		// check user if exist
 		user := uc.model.FindUser(ctx.Param("id"))

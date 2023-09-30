@@ -8,7 +8,7 @@ import (
 )
 
 
-func InitDB() {
+func InitDB() *gorm.DB {
 	dsn := "root@tcp(127.0.0.1:3306)/basic_connect_golang?charset=utf8mb4&parseTime=True&loc=Local"
 	
 	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
@@ -17,6 +17,8 @@ func InitDB() {
 	}
 
 	initMigrate(db)
+
+	return db
 }
 
 func initMigrate(db *gorm.DB) {

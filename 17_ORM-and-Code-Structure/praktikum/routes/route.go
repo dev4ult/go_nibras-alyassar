@@ -6,36 +6,32 @@ import (
 	controller "praktikum/controllers"
 )
 
-func New() *echo.Echo {
-	e := echo.New()
-
-
-	// Users Route Group
+func UserRoutes(e *echo.Echo, uc controller.UserController) {
 	users := e.Group("/users")
-	users.GET("", controller.GetUsers)
-	users.POST("", controller.CreateUser)
+	users.GET("", uc.GetUsers())
+	users.POST("", uc.CreateUser())
 
-	users.GET("/:id", controller.GetUser)
-	users.PUT("/:id", controller.UpdateUser)
-	users.DELETE("/:id", controller.DeleteUser)
+	users.GET("/:id", uc.GetUser())
+	users.PUT("/:id", uc.EditUser())
+	users.DELETE("/:id", uc.RemoveUser())
+}
 
-	// Books Route Group
+func BookRoutes(e *echo.Echo, bc controller.BookController) {
 	books := e.Group("/books")
-	books.GET("", controller.GetBooks)
-	books.POST("", controller.CreateBook)
+	books.GET("", bc.GetBooks)
+	books.POST("", bc.CreateBook)
 
-	books.GET("/:id", controller.GetBook)
-	books.PUT("/:id", controller.UpdateBook)
-	books.DELETE("/:id", controller.DeleteBook)
+	books.GET("/:id", bc.GetBook)
+	books.PUT("/:id", bc.EditBook)
+	books.DELETE("/:id", bc.RemoveBook)
+}
 
-	// Blogs Route Group
+func BlogRoutes(e *echo.Echo, bc controller.BlogController) {
 	blogs := e.Group("/blogs")
-	blogs.GET("", controller.GetBlogs)
-	blogs.POST("", controller.CreateBlog)
+	blogs.GET("", bc.GetBlogs)
+	blogs.POST("", bc.CreateBlog)
 
-	blogs.GET("/:id", controller.GetBlog)
-	blogs.PUT("/:id", controller.UpdateBlog)
-	blogs.DELETE("/:id", controller.DeleteBlog)
-
-	return e
+	blogs.GET("/:id", bc.GetBlog)
+	blogs.PUT("/:id", bc.UpdateBlog)
+	blogs.DELETE("/:id", bc.DeleteBlog)
 }
