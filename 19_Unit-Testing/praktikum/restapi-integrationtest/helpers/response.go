@@ -1,4 +1,4 @@
-package utils
+package helpers
 
 func Response(status int, message string) map[string]interface{} {
 	return map[string]interface{}{
