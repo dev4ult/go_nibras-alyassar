@@ -18,10 +18,10 @@ type IBookController interface {
 }
 
 type BookController struct {
-	model model.BookModel
+	model model.IBookModel
 }
 
-func NewBookController(model model.BookModel) IBookController {
+func NewBookController(model model.IBookModel) IBookController {
 	return &BookController{
 		model: model,
 	}

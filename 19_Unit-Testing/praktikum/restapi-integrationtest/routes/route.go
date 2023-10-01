@@ -7,29 +7,25 @@ import (
 	"github.com/labstack/echo/v4"
 
 	controller "praktikum/controllers"
-	m "praktikum/middlewares"
 )
 
-func New() *echo.Echo {
-	e := echo.New()
-
-	m.Logger(e)
-	e.POST("/users", controller.CreateUser)
-	e.POST("/users/login", controller.Login)
+func UserRoutes(e *echo.Echo, c controller.IUserController) {
+	e.POST("/users", c.CreateUser())
+	e.POST("/users/login", c.Login())
 
 	users := e.Group("/users")
 	users.Use(jwt.JWT([]byte(os.Getenv("SECRET_JWT"))))
-	users.GET("", controller.GetUsers)
-	users.GET("/:id", controller.GetUser)
-	users.PUT("/:id", controller.UpdateUser)
-	users.DELETE("/:id", controller.DeleteUser)
+	users.GET("", c.GetUsers())
+	users.GET("/:id", c.GetUser())
+	users.PUT("/:id", c.EditUser())
+	users.DELETE("/:id", c.RemoveUser())
+}
 
+func BookRoutes(e *echo.Echo, c controller.IBookController) {
 	books := e.Group("/books")
 	books.Use(jwt.JWT([]byte(os.Getenv("SECRET_JWT"))))
-	books.POST("", controller.CreateBook)
-	books.GET("/:id", controller.GetBook)
-	books.PUT("/:id", controller.UpdateBook)
-	books.DELETE("/:id", controller.DeleteBook)
-
-	return e
+	books.POST("", c.CreateBook())
+	books.GET("/:id", c.GetBook())
+	books.PUT("/:id", c.EditBook())
+	books.DELETE("/:id", c.RemoveBook())
 }

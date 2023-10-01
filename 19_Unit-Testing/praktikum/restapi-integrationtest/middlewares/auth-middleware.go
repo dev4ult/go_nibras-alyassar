@@ -5,22 +5,18 @@ import (
 	"time"
 
 	"github.com/golang-jwt/jwt"
-	"github.com/labstack/echo/v4"
-
-	config "praktikum/config"
-	model "praktikum/models"
 )
 
-func ImplementAuth(username string, password string, e echo.Context) (bool, error) {
-	var user model.User
+// func ImplementAuth(username string, password string, e echo.Context) (bool, error) {
+// 	var user model.User
 
-	err := config.DB.Where("username = ? AND password = ?", username, password).First(&user).Error
-	if err != nil {
-		return false, err
-	}
+// 	err := config.DB.Where("username = ? AND password = ?", username, password).First(&user).Error
+// 	if err != nil {
+// 		return false, err
+// 	}
 
-	return true, nil
-}
+// 	return true, nil
+// }
 
 func CreateToken(userId int, username string) (string, error) {
 	claims := jwt.MapClaims{}
