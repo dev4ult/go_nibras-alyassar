@@ -31,10 +31,6 @@ func (bc *BookController) GetBooks() echo.HandlerFunc {
 	return func(ctx echo.Context) error {
 		books := bc.model.SelectAllBook()
 	
-		if books == nil {
-			return ctx.JSON(http.StatusInternalServerError, helper.Response(500, "Something went Wrong!"))
-		}
-	
 		return ctx.JSON(http.StatusOK, map[string]interface{} {
 			"message": "Books Listed!",
 			"books": books,
@@ -65,16 +61,16 @@ func (bc *BookController) CreateBook() echo.HandlerFunc {
 func (bc *BookController) GetBook() echo.HandlerFunc {
 	return func(ctx echo.Context) error {
 
-		book := bc.model.FindBook(ctx.Param("id"))
+		result := bc.model.FindBook(ctx.Param("id"))
 	
-		if book["status"] != http.StatusOK {
-			return ctx.JSON(book["status"].(int), book)
+		if result["status"] != http.StatusOK {
+			return ctx.JSON(result["status"].(int), result)
 		}
 	
 		return ctx.JSON(http.StatusOK, map[string]interface{} {
 			"status": 200,
 			"message": "Book Found!",
-			"book": book["book"],
+			"book": result["book"],
 		})
 	}
 }
