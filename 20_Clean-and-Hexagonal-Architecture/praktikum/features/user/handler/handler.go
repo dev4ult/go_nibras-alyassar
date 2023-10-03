@@ -3,11 +3,11 @@ package handler
 import (
 	"github.com/labstack/echo/v4"
 
-	dto "clean_arch/features/users/dtos"
+	dto "clean_arch/features/user/dtos"
 	helper "clean_arch/helpers"
 )
 
-func (uc *UserController) GetAllUsers() echo.HandlerFunc {
+func (uc *userController) GetAllUsers() echo.HandlerFunc {
 	return func(c echo.Context) error {
 
 		users, message := uc.service.FetchAll()
@@ -20,7 +20,7 @@ func (uc *UserController) GetAllUsers() echo.HandlerFunc {
 	}
 }
 
-func (uc *UserController) CreateUser() echo.HandlerFunc {
+func (uc *userController) CreateUser() echo.HandlerFunc {
 	var userInput dto.UserInput
 
 	return func(c echo.Context) error {

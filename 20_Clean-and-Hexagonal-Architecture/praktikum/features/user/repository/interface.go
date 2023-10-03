@@ -3,22 +3,22 @@ package repository
 import (
 	"gorm.io/gorm"
 
-	entity "clean_arch/features/users/entity"
+	entity "clean_arch/features/user/entity"
 )
 
-type IUserRepo interface {
+type Repository interface {
 	Insert(input entity.UserEntity) (*entity.UserEntity, error)
 	SelectAll() ([]entity.UserEntity, error)
 	SelectById(userId int) (*entity.UserEntity, error)
 	SelectByUsername(username string) (*entity.UserEntity, error)
 }
 
-type UserRepo struct {
+type userRepo struct {
 	db *gorm.DB
 }
 
-func NewUserRepo(db *gorm.DB) IUserRepo {
-	return &UserRepo {
+func New(db *gorm.DB) Repository {
+	return &userRepo {
 		db: db,
 	}
 }
