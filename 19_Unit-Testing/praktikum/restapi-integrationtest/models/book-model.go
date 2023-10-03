@@ -10,7 +10,7 @@ import (
 )
 
 type Book struct {
-	gorm.Model
+	// gorm.Model
 	Id        int    `json:"id" form:"id" gorm:"type:int(11)"`
 	Title     string `json:"title" form:"title" gorm:"type:varchar(100)"`
 	Author    string `json:"author" form:"author" gorm:"type:varchar(255)"`
@@ -68,9 +68,9 @@ func (bm *BookModel) InsertBook(newBook Book) *Book {
 
 func (bm *BookModel) SelectAllBook() []Book {
 	var books []Book
-	bm.db.Find(&books)
+	err := bm.db.Find(&books).Error
 
-	if len(books) == 0 {
+	if err != nil || len(books) == 0 {
 		log.Fatal("No Book Found!")
 		return nil
 	}

@@ -31,7 +31,7 @@ func (bc *BookController) GetBooks() echo.HandlerFunc {
 	return func(ctx echo.Context) error {
 		books := bc.model.SelectAllBook()
 	
-		return ctx.JSON(http.StatusOK, map[string]interface{} {
+		return ctx.JSON(http.StatusOK, map[string]any {
 			"message": "Books Listed!",
 			"books": books,
 		})
@@ -50,7 +50,7 @@ func (bc *BookController) CreateBook() echo.HandlerFunc {
 			ctx.JSON(http.StatusInternalServerError, helper.Response(500, "Something went Wrong!"))
 		}
 	
-		return ctx.JSON(http.StatusOK, map[string]interface{} {
+		return ctx.JSON(http.StatusOK, map[string]any {
 			"status": 200,
 			"message": "Book Created!",
 			"book": book,
@@ -67,7 +67,7 @@ func (bc *BookController) GetBook() echo.HandlerFunc {
 			return ctx.JSON(result["status"].(int), result)
 		}
 	
-		return ctx.JSON(http.StatusOK, map[string]interface{} {
+		return ctx.JSON(http.StatusOK, map[string]any {
 			"status": 200,
 			"message": "Book Found!",
 			"book": result["book"],
@@ -77,17 +77,17 @@ func (bc *BookController) GetBook() echo.HandlerFunc {
 
 func (bc *BookController) EditBook() echo.HandlerFunc {
 	return func(ctx echo.Context) error {
-		book := bc.model.FindBook(ctx.Param("id"))
+		result := bc.model.FindBook(ctx.Param("id"))
 	
-		if book["status"] != http.StatusOK {
-			return ctx.JSON(book["status"].(int), book)
+		if result["status"] != http.StatusOK {
+			return ctx.JSON(result["status"].(int), result)
 		}
 	
 		var newBook model.Book
 	
 		ctx.Bind(&newBook)
 	
-		update := bc.model.UpdateBook(book["id"].(int), newBook)
+		update := bc.model.UpdateBook(result["id"].(int), newBook)
 	
 		if !update {
 			return ctx.JSON(http.StatusInternalServerError, helper.Response(500, "Something Went Wrong!"))
@@ -111,6 +111,6 @@ func (bc *BookController) RemoveBook() echo.HandlerFunc {
 			return ctx.JSON(http.StatusInternalServerError, helper.Response(500, "Something Went Wrong!"))
 		}
 
-		return ctx.JSON(http.StatusOK, helper.Response(200, "book Deleted!"))
+		return ctx.JSON(http.StatusOK, helper.Response(200, "Book Deleted!"))
 	}
 }

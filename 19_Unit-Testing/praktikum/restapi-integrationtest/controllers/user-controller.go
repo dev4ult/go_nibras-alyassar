@@ -33,10 +33,6 @@ func (uc *UserController) GetUsers() echo.HandlerFunc {
 	return func(c echo.Context) error {
 		users := uc.model.SelectAllUser()
 	
-		if users == nil {
-			return c.JSON(http.StatusInternalServerError, helper.Response(500, "Something went Wrong!"))
-		}
-	
 		return c.JSON(http.StatusOK, map[string]interface{}{
 			"message": "Users Listed!",
 			"users": users,
@@ -57,7 +53,8 @@ func (uc *UserController) CreateUser() echo.HandlerFunc {
 		}
 
 		return ctx.JSON(http.StatusOK, map[string]interface{}{
-			"message": "Users Created!",
+			"status": 200,
+			"message": "User Created!",
 			"user": user,
 		})
 	}
@@ -66,15 +63,16 @@ func (uc *UserController) CreateUser() echo.HandlerFunc {
 func (uc *UserController) GetUser() echo.HandlerFunc {
 	return func(ctx echo.Context) error {
 
-		user := uc.model.FindUser(ctx.Param("id"))
+		result := uc.model.FindUser(ctx.Param("id"))
 	
-		if user["status"] != http.StatusOK {
-			return ctx.JSON(user["status"].(int), user)
+		if result["status"] != http.StatusOK {
+			return ctx.JSON(result["status"].(int), result)
 		}
 	
 		return ctx.JSON(http.StatusOK, map[string]interface{} {
+			"status": 200,
 			"message": "User Found!",
-			"user": user["user"],
+			"user": result["user"],
 		})
 	}
 }
