@@ -7,6 +7,19 @@ import (
 	helper "clean_arch/helpers"
 )
 
+func (uc *UserController) GetAllUsers() echo.HandlerFunc {
+	return func(c echo.Context) error {
+
+		users, message := uc.service.FetchAll()
+
+		if users == nil {
+			return c.JSON(500, helper.Response(message, users))
+		}
+
+		return c.JSON(200, helper.Response(message, users))
+	}
+}
+
 func (uc *UserController) CreateUser() echo.HandlerFunc {
 	var userInput dto.UserInput
 
