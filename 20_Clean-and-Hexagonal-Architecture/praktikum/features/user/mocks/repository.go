@@ -1,42 +1,69 @@
 package mocks
 
-import "clean_arch/features/user/entity"
+import (
+	entity "clean_arch/features/user/entity"
+	"errors"
+)
 
 type MockRepo struct{}
 
 func (mr *MockRepo) Insert(input entity.UserEntity) (*entity.UserEntity, error) {
-	if err := mr.db.Create(input).Error; err != nil {
-		return nil, err
-	}
-
-	return &input, nil
+	return &entity.UserEntity{Username: "Nibras"}, errors.New("No User Created!")
 }
 
-func (mr *MockRepo) SelectAll() ([]entity.UserEntity, error) {
-	var users []entity.UserEntity
-	if err := mr.db.Find(&users).Error; err != nil {
-		return nil, err
-	}
+var ErrorSelect error
 
-	return users, nil
+func (mr *MockRepo) SelectAll() ([]entity.UserEntity, error) {
+	var users = []entity.UserEntity{}
+	return users, ErrorSelect
 }
 
 func (mr *MockRepo) SelectById(userId int) (*entity.UserEntity, error) {
 	var user entity.UserEntity
 
-	if err := mr.db.First(&user, userId).Error; err != nil {
-		return nil, err
+	return &user, nil
+}
+
+
+func (mr *MockRepo) SelectByUsername(username string) (*entity.UserEntity, error) {
+	var users = []entity.UserEntity{
+		{ID: 1, Username: "sarbinus", Email: "sarbin@example.com", Password: "sarbing123"},
 	}
+
+	for _, user := range users {
+		if user.Username == username {
+			return &user, nil
+		}
+	}
+
+	return &entity.UserEntity{}, nil
+}
+
+type SuccessMockRepo struct{}
+
+func (mr *SuccessMockRepo) Insert(input entity.UserEntity) (*entity.UserEntity, error) {
+	// if user, _ := mr.SelectByUsername("sarbinus"); user.Username == input.Username  {
+	// 	return "User Has Already Exist", nil
+	// } 
+	return &input, nil
+}
+
+func (mr *SuccessMockRepo) SelectAll() ([]entity.UserEntity, error) {
+	var users  = []entity.UserEntity{
+		{ID: 1, Username: "sarbinus", Email: "sarbin@example.com", Password: "sarbin123"},
+	}
+	
+	return users, nil
+}
+
+func (mr *SuccessMockRepo) SelectById(userId int) (*entity.UserEntity, error) {
+	var user entity.UserEntity
 
 	return &user, nil
 }
 
-func (mr *MockRepo) SelectByUsername(username string) (*entity.UserEntity, error) {
-	var user entity.UserEntity
-
-	if err := mr.db.Where("username = ?", username).First(&user).Error; err != nil {
-		return nil, err
-	}
+func (mr *SuccessMockRepo) SelectByUsername(username string) (*entity.UserEntity, error) {
+	var user = entity.UserEntity{}
 
 	return &user, nil
 }

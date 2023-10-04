@@ -1,67 +1,50 @@
 package mocks
 
 import (
-	"clean_arch/features/user/entity"
-
-	"github.com/mashingan/smapping"
+	dto "clean_arch/features/user/dtos"
+	entity "clean_arch/features/user/entity"
 )
 
 type MockService struct{}
 
+var UsersResponse = []dto.UserResponse{}
+
 func (us *MockService) FetchAll() ([]dto.UserResponse, string) {
-	users, err := us.repo.SelectAll()
-
-	if err != nil {
-		return nil, err.Error()
+	if len(UsersResponse) < 1 {
+		return UsersResponse, "There is No User!"
 	}
 
-	if len(users) == 0 {
-		return nil, "No User Listed!"
-	}
-
-	var response []dto.UserResponse
-	errMapping := smapping.FillStruct(&response, smapping.MapFields(&users))
-
-	if errMapping != nil {
-		return nil, "Cannot Mapping entity to DTO"
-	}
-
-	// need to map entity to dto
-	return response, "Success Get Users!"
+	return nil, "Something Went Wrong!"
 }
 
+// binding
+
+
 func (us *MockService) CreateUser(input dto.UserInput) (*dto.UserResponse, string) {
-	user, err := us.repo.SelectByUsername(input.Username)
-
-	if err != nil {
-		return nil, err.Error()
+	users := []entity.UserEntity{
+		{ID: 1, Username: "sarbinus", Email: "sarbin@example.com", Password: "sarbin123"},
 	}
 
-	if *user != (entity.UserEntity{}) {
-		return nil, "User has already exist!"
+	for _, user := range users {
+		if user.Username == input.Username {
+			return nil, "User Has Already Exist!"
+		}
 	}
 
-	var userEntity entity.UserEntity
-	errMappingDto := smapping.FillStruct(&userEntity, smapping.MapFields(&input))
+	return nil, "Something Went Wrong!"
+}
 
-	if errMappingDto != nil {
-		return nil, "Cannot Mapping DTO to entity"
-	}
+type SuccessMockService struct{}
 
-	// need to map dto to entity
-	newUser, errCreate := us.repo.Insert(userEntity)
+func (us *SuccessMockService) FetchAll() ([]dto.UserResponse, string) {
+	return []dto.UserResponse{
+		{Username: "sarbinus", Email: "sarbin@example.com"},
+	}, "Success Get Users!"
+}
 
-	if errCreate != nil {
-		return nil, err.Error()
-	}
-
-	var userDTO dto.UserResponse
-	errMappingEntity := smapping.FillStruct(&userDTO, smapping.MapFields(&newUser))
-
-	if errMappingEntity != nil {
-		return nil, "Cannot Mapping entity to DTO"
-	}
-
-	// need to map entity to dto
-	return &userDTO, "Success Created!"
+func (us *SuccessMockService) CreateUser(input dto.UserInput) (*dto.UserResponse, string) {
+	return &dto.UserResponse {
+			Username: input.Username, 
+			Email: input.Email,
+		}, "Success User Created!"
 }

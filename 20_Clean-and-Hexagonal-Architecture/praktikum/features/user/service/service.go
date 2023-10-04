@@ -14,22 +14,22 @@ func (us *userService) FetchAll() ([]dto.UserResponse, string) {
 		return nil, err.Error()
 	}
 
-	if len(users) == 0 {
-		return nil, "No User Listed!"
+	if len(users) < 1 {
+		return []dto.UserResponse{}, "There is No User!"
 	}
 
 	var response []dto.UserResponse
 	errMapping := smapping.FillStruct(&response, smapping.MapFields(&users))
 
 	if errMapping != nil {
-		return nil, "Cannot Mapping entity to DTO"
+		return nil, "Something Went Wrong!"
 	}
 
 	// need to map entity to dto
 	return response, "Success Get Users!"
 }
 
-func(us *userService) CreateUser(input dto.UserInput) (*dto.UserResponse, string) {
+func (us *userService) CreateUser(input dto.UserInput) (*dto.UserResponse, string) {
 	user, err := us.repo.SelectByUsername(input.Username)
 
 	if err != nil {
@@ -37,30 +37,30 @@ func(us *userService) CreateUser(input dto.UserInput) (*dto.UserResponse, string
 	}
 
 	if *user != (entity.UserEntity{}) {
-		return nil, "User has already exist!"
+		return nil, "User Has Already Exist!"
 	}
 
 	var userEntity entity.UserEntity
 	errMappingDto := smapping.FillStruct(&userEntity, smapping.MapFields(&input))
 
 	if errMappingDto != nil {
-		return nil, "Cannot Mapping DTO to entity"
+		panic(errMappingDto)
 	}
 
 	// need to map dto to entity
 	newUser, errCreate := us.repo.Insert(userEntity)
 
 	if errCreate != nil {
-		return nil, err.Error()
+		return nil, "No User Created!"
 	}
 
 	var userDTO dto.UserResponse 
 	errMappingEntity := smapping.FillStruct(&userDTO, smapping.MapFields(&newUser))
 
 	if errMappingEntity != nil {
-		return nil, "Cannot Mapping entity to DTO"
+		panic(errMappingEntity)
 	}
 
 	// need to map entity to dto
-	return &userDTO, "Success Created!"
+	return &userDTO, "Success User Created!"
 }
