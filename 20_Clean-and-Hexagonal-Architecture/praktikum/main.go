@@ -17,4 +17,9 @@ func main() {
 	route.UserRoutes(e, userHandler)
 
 	e.Start(":8000")
+
+	// type Test struct{}
+
+	// newTest := []Test{}
+	// fmt.Println(len(newTest))
 }

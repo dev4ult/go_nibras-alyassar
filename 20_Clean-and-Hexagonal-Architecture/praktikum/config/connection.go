@@ -1,7 +1,7 @@
 package config
 
 import (
-	user "clean_arch/features/users/entity"
+	user "clean_arch/features/user/entity"
 
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
