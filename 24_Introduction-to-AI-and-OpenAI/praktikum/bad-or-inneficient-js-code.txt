@@ -1,0 +1,32 @@
+// Function to calculate the sum of an array of numbers
+function calculateSum(arr) {
+  let sum = 0;
+  for (let i = 0; i < arr.length; i++) {
+    sum = sum + arr[i];
+  }
+  return sum;
+}
+
+// Function to check if a number is even
+function isEven(num) {
+  if (num % 2 === 0) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+// Function to print the even numbers in an array
+function printEvenNumbers(arr) {
+  for (let i = 0; i < arr.length; i++) {
+    if (isEven(arr[i]) === true) {
+      console.log(arr[i]);
+    }
+  }
+}
+
+// Test the code
+const numbers = [1, 2, 3, 4, 5, 6];
+console.log("Sum of numbers: " + calculateSum(numbers));
+console.log("Even numbers:");
+printEvenNumbers(numbers)

@@ -1,0 +1,4 @@
+You will be provided with a piece of Javascript code, 
+and your task is to provide ideas for efficiency improvements. 
+Refactor the code in a best approach and the simplest way so on 
+every level of programmers can understand.
